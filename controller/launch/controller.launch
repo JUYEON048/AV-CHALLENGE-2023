@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+	
+	<arg name="car_name" default="IONIQ" />
+	<arg name="rho" default="5.0" />
+	<arg name="steering_gain" default="15" />
+	<arg name="error_range_max" default="0.4" />	
+	<arg name="error_range_min" default="0.3" />
+	<arg name="accel_max_change" default="30" />	
+	<arg name="brake_max_change" default="150" />
+	<arg name="steering_max_change" default="2.5" />
+	<arg name="accel_limiter_max" default="1500" />
+	<arg name="accel_limiter_min" default="-100" />
+	<arg name="brake_limiter_max" default="20000" />
+	<arg name="brake_limiter_min" default="0" />
+	<arg name="steering_limiter_max" default="439" />
+	<arg name="steering_limiter_min" default="-439" />	
+	<arg name="brake_gain" default="10" />
+
+	<param name = "rho" value="$(arg rho)"/>
+	<param name = "steering_gain" value="$(arg steering_gain)"/>
+	<param name = "error_range_max" value="$(arg error_range_max)"/>
+	<param name = "error_range_min" value="$(arg error_range_min)"/>
+    <node pkg="controller" type="controller.py" name="controller">
+	<param name = "accel_max_change" value="$(arg accel_max_change)"/>
+	<param name = "brake_max_change" value="$(arg brake_max_change)"/>
+	<param name = "steering_max_change" value="$(arg steering_max_change)"/>
+	<param name = "accel_limiter_max" value="$(arg accel_limiter_max)"/>
+	<param name = "accel_limiter_min" value="$(arg accel_limiter_min)"/>
+	<param name = "brake_limiter_max" value="$(arg brake_limiter_max)"/>
+	<param name = "brake_limiter_min" value="$(arg brake_limiter_min)"/>
+	<param name = "brake_gain" value="$(arg brake_gain)"/>
+	<param name = "steering_limiter_max" value="$(arg steering_limiter_max)"/>
+	<param name = "steering_limiter_min" value="$(arg steering_limiter_min)"/>
+</node>	
+</launch>

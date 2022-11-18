@@ -1,0 +1,13 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <!-- Determine this using rosrun pointgrey_camera_driver list_cameras.
+       If not specified, defaults to first camera found. -->
+    
+
+	<include file="$(find can)/launch/can.launch"></include>
+	<!--<include file="$(find imu)/launch/imu.launch"></include> -->
+	<!--include file="$(find RTK)/launch/rtk.launch"></include-->		
+	<include file="$(find socketcan_bridge)/launch/socket.launch"></include>
+	<!-- node pkg="gps" type="GPS.py" name="GPS"  / -->
+
+</launch>
