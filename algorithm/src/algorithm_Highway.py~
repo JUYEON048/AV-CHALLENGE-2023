@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+def Highway(front_dist, before_dist, before_velocity):    #선행차와의 거리로 가속, 제동여부 결정/세부 수치는 필요시 변경
+    print("Highway Function",front_dist)
+    print("before_dist = ", before_dist)
+    velocity = 0
+    #before_velocity = 0.1
+    prevent_velocity = 0
+    if front_dist <= 25.0:
+        if before_velocity == 40:
+            velocity = 0
+        else:    
+            velocity = 0 
+
+    elif front_dist > 25.0 and front_dist <= 30.0:
+        velocity = 15
+
+    elif front_dist > 30.0 and front_dist <= 50.0:
+        print("30")
+        velocity = 30
+
+    elif front_dist > 60.0:
+        
+        if before_velocity == 0:
+            velocity = 0
+        elif before_dist == 1:
+            velocity = before_velocity
+        #elif before_velocity >= 30 and before_velocity < 35:
+        #    velocity = before_velocity
+        else:
+            velocity = 40
+    #print("before_velocity = ", before_velocity)
+    #before_velocity = velocity
+    return velocity
+
+        
+
+if __name__ == '__main__':
+    print("Algorithm_Highway.py")
+    
+    
+'''
+
+def Highway(front_dist):    #선행차와의 거리로 가속, 제동여부 결정/세부 수치는 필요시 변경
+    print("Highway Function",front_dist)
+    num = 0
+    if num == 0:
+        store_list = []
+
+    velocity = 0
+    before_velocity = 0.1
+    if front_dist <= 20.0:
+        if before_velocity == 40:
+            velocity = 0
+        else:    
+            velocity = 0 
+
+    elif front_dist > 20.0 and front_dist <= 30.0:
+        velocity = 15
+
+    elif front_dist > 30.0 and front_dist <= 50.0:
+        velocity = 30
+
+    elif front_dist > 60.0:
+        if len(store_list) < 10:
+            store_list.append(999)
+        elif len(store_list) >= 10:
+            store_list = []
+        if before_velocity == 0:
+            velocity = 0
+        else:
+            velocity = 40
+    num += 1
+    before_velocity = velocity
+    return velocity
+'''

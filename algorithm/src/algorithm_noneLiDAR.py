@@ -1,0 +1,92 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import rospy
+import time
+import message_filters
+from mi_msgs.msg import *
+from algorithm_Highway import Highway
+from algorithm_Hill import Hill
+
+
+class MI_Algorithms(object):
+    def __init__(self):
+        self.final_remote = Remote()
+        self.remote_pub = rospy.Publisher('remote_messages', Remote, queue_size = 10)
+        #obj_state_sub = message_filters.Subscriber("/Obj_state", Obj_state)
+        #obj_tracking_sub = rospy.Subscriber("/Obj_tracking", Obj_tracking, self.obj_tracking_callback)
+        # m_filters = message_filters.ApproximateTimeSynchronizer([obj_state_sub, line_state_sub], 10 , 100, allow_headerless=False)
+        #m_filters.registerCallback(self.Algorithms)
+        
+        #line_state_sub = rospy.Subscriber("/line_state", Line, self.line_callback)
+        self.line_state_sub = rospy.Subscriber("/line_state",Line, self.line_callback)
+        
+        self.obj_tracking_data = 0
+        #CONFIG velocity
+        self.final_remote.velocity = 40 
+        self.final_remote.steering = 0 
+        self.final_remote.gear = 5 
+        #self.final_remote.velocity = 20 
+
+        #CONFIG DRIVE MODE
+        self.Highway_Flag = True
+        self.Hill_Flag = False
+
+
+
+    def line_callback(self, data):
+        self.final_remote.steering = data.data
+        print(self.final_remote.steering)
+        self.remote_pub.publish(self.final_remote)
+    
+
+
+    def obj_tracking_callback(self, data):
+        #self.obj_tracking_data = data.data
+        #self.final_remote.steering = self.obj_tracking_data
+        self.final_remote.steering = data.data
+        self.remote_pub.publish(self.final_remote)
+    
+    def Algorithms(self, obj_state, line_state):
+        print("MI_Algorithms :: %s" %(rospy.Time.now()))
+        print("velocity :: ", self.final_remote.velocity)
+        if self.Highway_Flag:   # Highway(ACC & AEB) algorithm
+            if obj_state.data < 70:
+                self.final_remote.velocity = Highway(obj_state.data)
+                if self.final_remote.velocity == 0: #Emergency
+                    while True:
+                        self.remote_pub.publish(self.final_remote)
+                        time.sleep(0.02)
+                        break
+                else:
+                    pass
+            else:
+                self.final_remote.velocity = 40
+        
+        elif self.Hill_Flag:   # Hill(ACC & AEB) algorithm
+            if obj_state.data < 70:
+                self.final_remote.velocity = Hill(obj_state.data)
+                if self.final_remote.velocity == 0: #Emergency
+                    while True:
+                        self.remote_pub.publish(self.final_remote)
+                        time.sleep(0.02)            
+                        break
+                else:
+                    pass
+            else:
+                self.final_remote.velocity = 20
+        else:
+            pass #Don't use LiDAR Data
+
+        #print(line_state)
+        if line_state is not None:
+            self.final_remote.steering = line_state.data
+        else:
+            pass
+        self.remote_pub.publish(self.final_remote)
+
+
+
+if __name__ == '__main__':
+    rospy.init_node('algorithm',anonymous=True)
+    mi_algo = MI_Algorithms()
+    rospy.spin()
