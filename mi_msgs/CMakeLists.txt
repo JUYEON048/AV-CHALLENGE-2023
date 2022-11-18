@@ -1,0 +1,36 @@
+cmake_minimum_required(VERSION 2.8.3)
+project(mi_msgs)
+set(CMAKE_CXX_STANDARD 14)
+find_package(catkin REQUIRED
+  COMPONENTS
+    message_generation
+    std_msgs
+)
+
+add_message_files(DIRECTORY msg
+  FILES
+    Car.msg
+    Car_LGIT.msg
+	Control.msg
+	Remote.msg
+	RTK.msg
+	Line.msg
+	Obj_state.msg
+	Obj_hill_state.msg
+    Obj_tracking.msg
+    SCH_LGIT.msg
+    Trigger.msg
+    Sonar.msg
+    imu_mi.msg
+)
+
+generate_messages(
+  DEPENDENCIES
+    std_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS
+    message_runtime
+    std_msgs
+)

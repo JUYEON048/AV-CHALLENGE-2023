@@ -1,0 +1,3 @@
+<launch>
+    <node name="lidar_lane_detection" pkg="lidar_lane" type="lidar_lane_detection" />
+</launch>

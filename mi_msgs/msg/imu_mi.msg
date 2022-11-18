@@ -1,0 +1,15 @@
+Header header
+float32 roll
+float32 pitch
+float32 yaw
+float32 heading
+float32 q1
+float32 q2
+float32 q3
+float32 q4
+float32 acc_x
+float32 acc_y
+float32 acc_z
+float32 ang_vel_x
+float32 ang_vel_y
+float32 ang_vel_z
