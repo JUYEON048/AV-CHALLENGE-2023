@@ -1,0 +1,7 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+  <!-- Determine this using rosrun pointgrey_camera_driver list_cameras.
+       If not specified, defaults to first camera found. -->
+    <node pkg="socketcan_bridge" type="socketcan_bridge_node" name="socketcan_bridge"  />
+
+</launch>

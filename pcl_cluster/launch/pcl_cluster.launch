@@ -1,0 +1,5 @@
+<launch>
+    <node name="delete_z" pkg="pcl_cluster" type="delete_z" />
+    <node name="Pcl_cluster" pkg="pcl_cluster" type="pcl_cluster" />
+    <node name="judgment" pkg="pcl_cluster" type="judgment" />
+</launch>
